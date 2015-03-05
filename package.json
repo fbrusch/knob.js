@@ -1,0 +1,21 @@
+{
+  "name": "ng-knob",
+  "version": "1.0.0",
+  "description": "Simple Knob UI element in Angular",
+  "main": "knob.js",
+  "dependencies": {
+    "angular": "^1.3.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular",
+    "ui",
+    "svg",
+    "knob"
+  ],
+  "author": "Francesco Bruschi",
+  "license": "ISC"
+}
