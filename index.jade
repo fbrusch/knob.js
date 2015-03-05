@@ -6,5 +6,6 @@ html
         table
             tr(ng-repeat="i in [1,2,3,4]")
                 td(ng-repeat="j in [1,2,3,5,6]")
-                        knob(pos="value")
+                        knob(pos="value",min="0",max="255")
+                        p {{value}}
         p {{value}}

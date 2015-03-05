@@ -11,19 +11,29 @@ app.directive('knob', function() {
   return {
     restrict: 'E',
     scope: {
-      pos: "="
+      pos: "=",
+      max: "=",
+      min: "="
     },
-    template: "<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 100 100\"\n    ng-mousedown=\"mousedown($event)\">\n    <circle cx=\"50\" cy=\"50\" r=\"45\"\n            stroke-width=\"10\"\n            stroke=\"black\"\n            fill=\"white\">\n    </circle>\n    <line x1=\"50\" y1=\"50\" x2=\"50\" y2=\"83\"\n          stroke-width=\"10\"\n          stroke=\"black\"\n          transform=\"rotate({{pos}} 50 50)\">\n    </line>\n</svg>\n",
+    template: "<p> {{pos}} </p>\n<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 100 100\"\n    ng-mousedown=\"mousedown($event)\">\n    <circle cx=\"50\" cy=\"50\" r=\"45\"\n            stroke-width=\"10\"\n            stroke=\"black\"\n            fill=\"white\">\n    </circle>\n    <line x1=\"50\" y1=\"50\" x2=\"50\" y2=\"17\"\n          stroke-width=\"10\"\n          stroke=\"black\"\n          transform=\"rotate({{normalise(pos)}} 50 50)\">\n    </line>\n</svg>\n",
     controller: function($scope, $document) {
+      $scope.normalise = function(v) {
+        return (v - $scope.min) / ($scope.max - $scope.min) * 360;
+      };
       return $scope.mousedown = function(event) {
-        var mouseGetXY, startPos, x, y;
+        var inBounds, mouseGetXY, startPos, x, y;
         startPos = $scope.pos;
         console.log(event);
         x = event.x;
         y = event.y;
+        inBounds = function(v) {
+          return v <= $scope.max && v >= $scope.min;
+        };
         mouseGetXY = function(e) {
-          $scope.pos = startPos + e.y - y;
-          return $scope.$apply();
+          if (inBounds(startPos + e.y - y)) {
+            $scope.pos = startPos + e.y - y;
+            return $scope.$apply();
+          }
         };
         $document[0].addEventListener('mousemove', mouseGetXY);
         return $document[0].addEventListener('mouseup', function() {
