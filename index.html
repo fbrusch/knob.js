@@ -5,14 +5,7 @@
     <script src="dist/knob.js"></script>
   </head>
   <body ng-app="knob" ng-controller="knobCtrl">
-    <table>
-      <tr ng-repeat="i in [1,2,3,4]">
-        <td ng-repeat="j in [1,2,3,5,6]">
-          <knob pos="value" min="0" max="255"></knob>
-          <p>{{value}}</p>
-        </td>
-      </tr>
-    </table>
+    <knob height="20vh" width="20vh" pos="value" color="rgb({{value}},0,0)" max="255"></knob>
     <p>{{value}}</p>
   </body>
 </html>

@@ -3,9 +3,5 @@ html
         script(src="node_modules/angular/angular.min.js")
         script(src="dist/knob.js")
     body(ng-app="knob",ng-controller="knobCtrl")
-        table
-            tr(ng-repeat="i in [1,2,3,4]")
-                td(ng-repeat="j in [1,2,3,5,6]")
-                        knob(pos="value",min="0",max="255")
-                        p {{value}}
+        knob(height="20vh",width="20vh",pos="value",color="rgb({{value}},0,0)",max="255")
         p {{value}}
