@@ -28,6 +28,7 @@ app.directive 'knob', ->
             (v-$scope.min)/($scope.max-$scope.min)*360
 
         $scope.mousedown = (event)->
+            event.preventDefault()
             startPos = $scope.pos
             y = event.y
 
