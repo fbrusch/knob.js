@@ -31,18 +31,22 @@ app.directive('knob', function() {
         return (v - $scope.min) / ($scope.max - $scope.min) * 360;
       };
       return $scope.mousedown = function(event) {
-        var inBounds, mouseGetXY, startPos, y;
+        var clip, mouseGetXY, startPos, y;
         event.preventDefault();
         startPos = $scope.pos;
         y = event.y;
-        inBounds = function(v) {
-          return v <= $scope.max && v >= $scope.min;
+        clip = function(v, min, max) {
+          if (v > max) {
+            return max;
+          }
+          if (v < min) {
+            return min;
+          }
+          return v;
         };
         mouseGetXY = function(e) {
-          if (inBounds(startPos + e.y - y)) {
-            $scope.pos = startPos + e.y - y;
-            return $scope.$apply();
-          }
+          $scope.pos = clip(startPos + e.y - y, $scope.min, $scope.max);
+          return $scope.$apply();
         };
         $document[0].addEventListener('mousemove', mouseGetXY);
         return $document[0].addEventListener('mouseup', function() {

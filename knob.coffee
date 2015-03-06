@@ -32,12 +32,15 @@ app.directive 'knob', ->
             startPos = $scope.pos
             y = event.y
 
-            inBounds = (v) -> v <= $scope.max and v >= $scope.min
+            clip = (v, min, max) ->
+                if v > max then return max
+                if v < min then return min
+                return v
 
             mouseGetXY = (e) ->
-                if inBounds (startPos + e.y-y) 
-                    $scope.pos = startPos + e.y-y
-                    $scope.$apply()
+                $scope.pos = clip startPos + e.y-y, 
+                              $scope.min, $scope.max
+                $scope.$apply()
 
             $document[0].addEventListener 'mousemove', mouseGetXY
             $document[0].addEventListener 'mouseup', -> 
