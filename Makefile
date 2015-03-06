@@ -11,3 +11,6 @@ dist/knob.js: knob.coffee template.html
 
 index.html: index.jade
 	jade -P index.jade
+
+watch:
+	nodemon --exec "make BUILD" -e "jade coffee"
